@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {  Platform,SafeAreaView ,StyleSheet , Image, AsyncStorage} from 'react-native';
+import {  Platform,SafeAreaView ,ScrollView,StyleSheet , Image, AsyncStorage} from 'react-native';
 
 import SpotList from '../componets/spotList';
 
@@ -10,18 +10,20 @@ export default function List(){
     const [techs, setTechs]  =useState([]);
 
     useEffect(() => {
-        AsyncStorage.getItem('techs').then(storagedTechs => {
-            const techsArray = storagedTechs.split(',').map(tech => tech.trim());
+        AsyncStorage.getItem('techs')
+            .then((storagedTechs) => {
+                const techsArray = storagedTechs.split(',').map(tech => tech.trim())
 
-            setTechs(techsArray);
-        })
-    }, []);
+                setTechs(techsArray)
+            })
+    },[])
 
     return (
     <SafeAreaView style = {styles.container}>
         <Image style = {styles.logo} source = {logo}/>
-
-        {techs.map(tech => <SpotList Key={tech} tech= {tech}/>)}
+        <ScrollView>
+                { techs.map(tech=> <SpotList key={tech} tech={tech} /> )}
+            </ScrollView>
     </SafeAreaView>
     )
 }
@@ -30,6 +32,7 @@ const styles = StyleSheet.create({
     container : {
         flex: 1,
         paddingTop: Platform.OS === 'android' ? 25 : 0,
+        
     },
 
     logo : {
@@ -37,5 +40,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         alignSelf: 'center',
         marginTop: 10,
+        
     }
+
 });
