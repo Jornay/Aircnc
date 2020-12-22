@@ -37,6 +37,19 @@ export default function DashBoard(){
         loadSpots();
     }, []);
     
+    async function handdleAccept(id){
+        await  api.post(`./bookings/${id}/approvals`)
+
+        setRequests(requests.filter(request => request._id !== id));
+    }
+    async function handdleReject(id){
+        await  api.post(`./bookings/${id}/rejection`)
+
+        setRequests(requests.filter(request => request._id !== id));
+        
+    }
+
+
     return (
         <>
             <ul className="notifications">
@@ -45,8 +58,8 @@ export default function DashBoard(){
                         <p>
                             <strong>{request.user.email}</strong> esta solicitando uma reserva em <strong>{request.spot.company}</strong> para a data: <strong>{request.spot.date}</strong>
                         </p>
-                        <button className="accept">ACEITAR</button>
-                        <button className="reject">RECUSAR</button> 
+                        <button className="accept" onClick = {() => handdleAccept(request._id)} >ACEITAR</button>
+                        <button className="reject" onClick = {() => handdleReject(request._id)} >RECUSAR</button> 
                     </li>
                 ))}
             </ul>
