@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import socketio from 'socket.io-client';
+//import socketio from 'socket.io-client';
 import {  Alert, Platform,SafeAreaView ,ScrollView,StyleSheet , Image, AsyncStorage} from 'react-native';
 
 import SpotList from '../componets/spotList';
@@ -10,9 +10,9 @@ export default function List(){
 
     const [techs, setTechs]  =useState([]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         AsyncStorage.getItem('user').then(user_id =>{
-            const socket = socketio('http://192.168.15.6:3333',{
+            const socket = socketio('http://192.168.15.8:3333',{
                 query : { user_id }
             })
 
@@ -22,7 +22,7 @@ export default function List(){
         })
 
 
-    }, [])
+    }, []) */
 
     useEffect(() => {
         AsyncStorage.getItem('techs')
