@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import socketio from 'socket.io-client';
-import {  Alert, Platform,SafeAreaView ,ScrollView,StyleSheet , Image, AsyncStorage} from 'react-native';
+//import socketio from 'socket.io-client';
+import {  Alert,TouchableOpacity,Text,View, Platform,SafeAreaView ,ScrollView,StyleSheet , Image, AsyncStorage} from 'react-native';
 
 import SpotList from '../componets/spotList';
 
 import logo from '../assets/logo.png';
 
-export default function List(){
+    export default function List({navigation}){
 
     const [techs, setTechs]  =useState([]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         AsyncStorage.getItem('user').then(user_id =>{
-            const socket = socketio('http://192.168.15.6:3333',{
+            const socket = socketio('http://192.168.15.8:3333',{
                 query : { user_id }
             })
 
@@ -22,7 +22,13 @@ export default function List(){
         })
 
 
-    }, [])
+    }, []) */
+
+    function handdleLogout(){
+        AsyncStorage.removeItem('user');
+
+        navigation.navigate('Login');
+    }   
 
     useEffect(() => {
         AsyncStorage.getItem('techs')
@@ -35,7 +41,13 @@ export default function List(){
 
     return (
     <SafeAreaView style = {styles.container}>
-        <Image style = {styles.logo} source = {logo}/>
+        <View style={{flex: 0.2, flexDirection: 'row-reverse'}}>
+            <TouchableOpacity  onPress={handdleLogout} style = {styles.button}>
+                <Text style = {styles.buttonText}>Logout</Text>
+            </TouchableOpacity>
+            <Image style = {styles.logo} source = {logo}/>
+        </View>
+        
         <ScrollView>
                 { techs.map(tech=> <SpotList key={tech} tech={tech} /> )}
             </ScrollView>
@@ -55,6 +67,23 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         alignSelf: 'center',
         marginTop: 10,
+        
+    },
+
+    button : {
+        marginTop: 30,
+        height:30,
+        width: 100,
+        backgroundColor : '#f05a5b',
+        justifyContent:'center',
+        alignItems: 'center',
+        borderRadius: 10
+    },
+
+    buttonText : {
+        color: '#fff',
+        fontWeight: 'bold',  
+        fontSize: 15,
         
     }
 
