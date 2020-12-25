@@ -14,12 +14,11 @@ const io = socketio(server);
 
 
 
-mongoose.connect('mongodb+srv://omnistechDB:omnistechDB@omnistech.ccswx.mongodb.net/AppPhone?retryWrites=true&w=majority' , {
+mongoose.connect(/*  Your Connection with mongoDb  */ , {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
 
-const connectedUsers = {};
 
 io.on('connection', socket => {
 
